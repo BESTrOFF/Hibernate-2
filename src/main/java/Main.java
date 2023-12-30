@@ -77,11 +77,11 @@ public class Main {
         main.createNewCustomer();
     }
 
-    private Customer createNewCustomer() {
-        try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.beginTransaction();
-
-            City city = cityDao.getList(0, 1).get(0);
+//    private Customer createNewCustomer() {
+//        try (Session session = sessionFactory.openSession()) {
+//            Transaction transaction = session.beginTransaction();
+//
+//            City city = cityDao.getList(0, 1).get(0);
 //            Country country = countryDao.getList(0, 1).get(0);
 //            city.setCity("Solnechnogorsk");
 //            city.setCountry(country);
@@ -101,6 +101,21 @@ public class Main {
 //            customer.setLastName("Cat");
 //            customer.setAddress(address);
 //            customerDao.save(customer);
+//
+//            transaction.commit();
+//            return null;
+//        }
+//    }
+
+        private Customer createNewCustomer() {
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            Short s = 1;
+            Country country = session.get(Country.class, s);
+
+            Session session1 = sessionFactory.getCurrentSession();
+            Country country1 = session1.get(Country.class, s);
 
             transaction.commit();
             return null;
