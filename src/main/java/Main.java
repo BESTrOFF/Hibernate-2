@@ -77,49 +77,33 @@ public class Main {
         main.createNewCustomer();
     }
 
-//    private Customer createNewCustomer() {
-//        try (Session session = sessionFactory.openSession()) {
-//            Transaction transaction = session.beginTransaction();
-//
-//            City city = cityDao.getList(0, 1).get(0);
-//            Country country = countryDao.getList(0, 1).get(0);
-//            city.setCity("Solnechnogorsk");
-//            city.setCountry(country);
-//
-//            Store store = storeDao.getList(0, 1).get(0);
-//
-//            Address address = addressDao.getList(0, 1).get(0);
-//            address.setAddress("Solnechnogorsk");
-//            address.setDistrict("CMIS");
-//            address.setCity(city);
-//            address.setPhone("89629471519");
-//            addressDao.save(address);
-//
-//            Customer customer = new Customer();
-//            customer.setStore(store);
-//            customer.setFirstName("Anna");
-//            customer.setLastName("Cat");
-//            customer.setAddress(address);
-//            customerDao.save(customer);
-//
-//            transaction.commit();
-//            return null;
-//        }
-//    }
-
-        private Customer createNewCustomer() {
+    private Customer createNewCustomer() {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
 
-            Short s = 1;
-            Country country = session.get(Country.class, s);
+            City city = session.get(City.class, 1);
+            Country country = session.get(Country.class,1);
+            city.setCity("Solnechnogorsk");
+            city.setCountry(country);
 
-            Session session1 = sessionFactory.getCurrentSession();
-            Country country1 = session1.get(Country.class, s);
+            Store store = session.get(Store.class, 1);
+
+            Address address = session.get(Address.class, 1);
+            address.setAddress("Solnechnogorsk");
+            address.setDistrict("CMIS");
+            address.setCity(city);
+            address.setPhone("89629471519");
+            session.save(address);
+
+            Customer customer = new Customer();
+            customer.setStore(store);
+            customer.setFirstName("Anna");
+            customer.setLastName("Cat");
+            customer.setAddress(address);
+            session.save(customer);
 
             transaction.commit();
-            return null;
+            return customer;
         }
     }
-
 }
